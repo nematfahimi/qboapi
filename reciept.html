@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cash Receipt Form</title>
+  <meta name="viewport" content="width=900">
+  <style>
+    body {
+      background: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .receipt-main {
+      width: 830px;
+      height: 580px;
+      margin: 30px auto;
+      box-sizing: border-box;
+      padding: 30px 30px 30px 30px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      background: #fff;
+    }
+    .receipt-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .receipt-title {
+      font-size: 2.1rem;
+      font-weight: 400;
+      margin: 0 0 22px 0;
+    }
+    .logo-box {
+      width: 120px;
+      height: 45px;
+      background: #dedede;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    .receipt-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    .info-col-left {
+      font-size: 1.24rem;
+    }
+    .info-label {
+      color: #222;
+      margin-bottom: 3px;
+    }
+    .info-value {
+      font-weight: bold;
+      font-size: 1.26rem;
+      color: #111;
+      margin-bottom: 0;
+    }
+    .info-value input {
+      border:none; 
+      background:none; 
+      font-weight:bold; 
+      font-size:1.24rem; 
+      width:220px; 
+      outline:none;
+    }
+    .info-col-right {
+      text-align: right;
+      font-size: 1.2rem;
+      color: #222;
+      min-width: 250px;
+    }
+    .info-col-right span {
+      font-weight: bold;
+      font-size: 1.22rem;
+    }
+    /* Amount Row */
+    .amount-table-wrap {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .amount-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .amount-table td, .amount-table th {
+      border: 1px solid #222;
+      padding: 9px 14px;
+      font-size: 1.08rem;
+    }
+    .amount-table td input, .amount-table td span {
+      font-size: 1.08rem;
+      border: none;
+      background: none;
+      color: #111;
+      outline: none;
+      width: 100%;
+      font-weight: normal;
+    }
+    .amount-table .amount-label {
+      min-width: 100px;
+      background: #fafafa;
+      font-weight: 400;
+      text-align: left;
+      border-radius: 6px 0 0 6px;
+    }
+    .amount-table .amount-value {
+      width: 190px;
+      text-align: left;
+      font-weight: normal;
+      background: #fff;
+    }
+    .amount-table .amount-words {
+      width: 300px;
+      background: #fff;
+      border-radius: 0 6px 6px 0;
+    }
+    /* Table Style */
+    .receipt-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    .receipt-table th, .receipt-table td {
+      border: 1.1px solid #2196f3;
+      padding: 8px 12px;
+      font-size: 1.08rem;
+      background: #fff;
+      font-weight: 400;
+    }
+    .receipt-table th {
+      background: #b3ecff;
+      color: #223045;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .receipt-table th:last-child,
+    .receipt-table td:last-child {
+      text-align: right;
+    }
+    .receipt-table input {
+      border: none;
+      background: transparent;
+      font-size: 1.07rem;
+      width: 98%;
+      color: #222;
+      outline: none;
+    }
+    .grand-total-row td {
+      background: #fff;
+      font-weight: 500;
+      font-size: 1.09rem;
+      text-align: right;
+      border-top: 1.5px solid #2196f3;
+    }
+    .grand-total-row td:first-child {
+      background: #fff;
+      border: none;
+    }
+    /* Footer */
+    .receipt-footer {
+      margin-top: 0px;
+      font-size: 1.06rem;
+      color: #222;
+    }
+    .print-btn {
+      margin: 18px auto 0 auto;
+      display: block;
+      padding: 11px 38px;
+      font-size: 1.14rem;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.17s;
+      font-weight: 500;
+      box-shadow: 0 2px 8px #d5e5fa5e;
+    }
+    .print-btn:hover {
+      background: #1356a2;
+    }
+    /* چاپ فقط رسید */
+    @media print {
+      body {
+        background: #fff !important;
+      }
+      .print-btn {
+        display: none !important;
+      }
+      .receipt-main {
+        margin: 0 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+      }
+      @page {
+        size: A5 landscape;
+        margin: 0.5cm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <form class="receipt-main" autocomplete="off" id="print-area">
+    <div class="receipt-header-row">
+      <div>
+        <div class="receipt-title">Cash Receipt</div>
+      </div>
+      <div class="logo-box"></div>
+    </div>
+    <div class="receipt-info-row">
+      <div class="info-col-left">
+        <div class="info-label">Received From:</div>
+        <div class="info-value">
+          <input type="text" name="received_from" value="1935 Nemat Fahimi">
+        </div>
+      </div>
+      <div class="info-col-right">
+        Date: <span><input type="text" name="date" value="06/27/2025" style="font-weight:bold; width:95px; font-size:1.14rem;"></span><br>
+        Reference no: <span><input type="text" name="reference_no" value="6545/512" style="font-weight:bold; width:90px; font-size:1.13rem;"></span>
+      </div>
+    </div>
+    <div class="amount-table-wrap">
+      <table class="amount-table">
+        <tr>
+          <td class="amount-label">Amount:</td>
+          <td class="amount-value">
+            <input type="text" name="amount" value="500000 AFN" required>
+          </td>
+          <td class="amount-words">
+            <input type="text" name="amount_words" value="one thousand five hundred">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <table class="receipt-table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" name="desc1" value="Invoice Product / Service line 1"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="desc2" value="Invoice Product / Service line 2"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="desc3" value="Invoice Product / Service Line 3"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="desc4" value="Invoice Product / Service Line 4"></td>
+          <td></td>
+        </tr>
+        <tr class="grand-total-row">
+          <td></td>
+          <td>Grand Total</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="receipt-footer">
+      Received By: <span style="font-weight:400;">Abdulhay</span>
+    </div>
+  </form>
+  <button class="print-btn" onclick="window.print()">Print (A5)</button>
+</body>
+</html>
